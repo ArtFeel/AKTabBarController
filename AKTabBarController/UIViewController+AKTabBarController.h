@@ -22,8 +22,7 @@
 
 @interface UIViewController (AKTabBarController)
 
-- (NSString *)tabImageName;
-
-- (NSString *)tabTitle;
+- (NSString *)tabActiveImageName;
+- (NSString *)tabInactiveImageName;
 
 @end

@@ -41,14 +41,13 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (NSString *)tabImageName
+- (NSString *)tabActiveImageName
 {
-	return @"image-1";
+	return @"footer_stream_icon_active";
 }
 
-- (NSString *)tabTitle
-{
-	return self.title;
+- (NSString *)tabInactiveImageName {
+	return @"footer_stream_icon_inactive";
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

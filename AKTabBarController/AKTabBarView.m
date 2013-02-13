@@ -33,6 +33,7 @@
         [_tabBar removeFromSuperview];
         _tabBar = tabBar;
         [self addSubview:tabBar];
+        
     }
 }
 
@@ -57,8 +58,8 @@
     CGRect tabBarRect = _tabBar.frame;
     tabBarRect.origin.y = CGRectGetHeight(self.bounds) - CGRectGetHeight(_tabBar.bounds);
     [_tabBar setFrame:tabBarRect];
-    
-    CGRect contentViewRect = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - ((!_isTabBarHidding) ? CGRectGetHeight(_tabBar.bounds) : 0));
+
+    CGRect contentViewRect = CGRectMake(0, (!_isTabBarHidding)? self.shaddowOffset:0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - ((!_isTabBarHidding) ? CGRectGetHeight(_tabBar.bounds) - self.shaddowOffset : 0));
     _contentView.frame = contentViewRect;
     [_contentView setNeedsLayout];
 }

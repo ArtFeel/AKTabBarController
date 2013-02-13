@@ -24,49 +24,13 @@
 
 @interface AKTab : UIButton
 
-// Image used to draw the icon.
-@property (nonatomic, strong) NSString *tabImageWithName;
+@property (nonatomic, strong) NSString *activeIconName;
+@property (nonatomic, strong) NSString *inActiveIconName;
 
-// Tab background image
-@property (nonatomic, strong) NSString *backgroundImageName;
+@property (nonatomic, strong) NSString *activeBackgroundImageName;
+@property (nonatomic, strong) NSString *inActiveBackgroundImageName;
 
-// Tab selected background image
-@property (nonatomic, strong) NSString *selectedBackgroundImageName;
-
-// Tab text color
-@property (nonatomic, strong) UIColor *textColor;
-
-// Tab selected text color
-@property (nonatomic, strong) UIColor *selectedTextColor;
-
-// Tabs title.
-@property (nonatomic, strong) NSString *tabTitle;
-
-// Tabs icon colors.
-@property (nonatomic, strong) NSArray *tabIconColors;
-
-// Tabs selected icon colors.
-@property (nonatomic, strong) NSArray *tabIconColorsSelected;
-
-// Tabs selected colors.
-@property (nonatomic, strong) NSArray *tabSelectedColors;
-
-// Tabs icon glossy show / hide
-@property (nonatomic, assign) BOOL glossyIsHidden;
-
-// Tab stroke Color
-@property (nonatomic, strong) UIColor *strokeColor;
-
-// Tab top embos Color
-@property (nonatomic, strong) UIColor *edgeColor;
-
-// Height of the tab bar.
-@property (nonatomic, assign) CGFloat tabBarHeight;
-
-// Minimum height that permits the display of the tab's title.
-@property (nonatomic, assign) CGFloat minimumHeightToDisplayTitle;
-
-// Used to show / hide title.
-@property (nonatomic, assign) BOOL titleIsHidden;
+@property (nonatomic, assign) NSUInteger shaddowOffset;
+@property (nonatomic, assign) NSUInteger tabBarHeight;
 
 @end

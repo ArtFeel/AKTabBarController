@@ -23,6 +23,7 @@
 #import "AKTabBarController.h"
 #import "UIViewController+AKTabBarController.h"
 
+
 // Default height of the tab bar
 static const int kDefaultTabBarHeight = 50;
 
@@ -84,9 +85,8 @@ typedef enum {
     return self;
 }
 
-- (void)loadView
-{
-    [super loadView];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     
     // Creating and adding the tab bar view
     tabBarView = [[AKTabBarView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
@@ -96,11 +96,14 @@ typedef enum {
     CGRect tabBarRect = CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - tabBarHeight, CGRectGetWidth(self.view.frame), tabBarHeight);
     tabBar = [[AKTabBar alloc] initWithFrame:tabBarRect];
     tabBar.delegate = self;
+    tabBar.shaddowOffset = self.shaddowOffset;
     
     tabBarView.tabBar = tabBar;
+    tabBarView.shaddowOffset = self.shaddowOffset;
     tabBarView.contentView = _selectedViewController.view;
     [[self navigationItem] setTitle:[_selectedViewController title]];
     [self loadTabs];
+
 }
 
 - (void)loadTabs
@@ -108,32 +111,20 @@ typedef enum {
     NSMutableArray *tabs = [[NSMutableArray alloc] init];
     for (UIViewController *vc in self.viewControllers)
     {
-        [[tabBarView tabBar] setBackgroundImageName:[self backgroundImageName]];
-        [[tabBarView tabBar] setTabColors:[self tabCGColors]];
-        [[tabBarView tabBar] setEdgeColor:[self tabEdgeColor]];
+        [[tabBarView tabBar] setBackgroundImageName:[self tabBarBackgroundImageName]];
         
         AKTab *tab = [[AKTab alloc] init];
-        [tab setTabImageWithName:[vc tabImageName]];
-        [tab setBackgroundImageName:[self backgroundImageName]];
-        [tab setSelectedBackgroundImageName:[self selectedBackgroundImageName]];
-        [tab setTabIconColors:[self iconCGColors]];
-        [tab setTabIconColorsSelected:[self selectedIconCGColors]];
-        [tab setTabSelectedColors:[self selectedTabCGColors]];
-        [tab setEdgeColor:[self tabEdgeColor]];
-        [tab setGlossyIsHidden:[self iconGlossyIsHidden]];
-        [tab setStrokeColor:[self tabStrokeColor]];
-        [tab setTextColor:[self textColor]];
-        [tab setSelectedTextColor:[self selectedTextColor]];
-        [tab setTabTitle:[vc tabTitle]];
         
-        [tab setTabBarHeight:tabBarHeight];
+        tab.shaddowOffset = self.shaddowOffset;
+
+        tab.activeIconName = [vc tabActiveImageName];
+        tab.inActiveIconName = [vc tabInactiveImageName];
         
-        if (_minimumHeightToDisplayTitle)
-            [tab setMinimumHeightToDisplayTitle:_minimumHeightToDisplayTitle];
-        
-        if (_tabTitleIsHidden)
-            [tab setTitleIsHidden:YES];
-        
+        tab.activeBackgroundImageName = self.tabSelectedBackgroundImageName;
+        tab.inActiveBackgroundImageName = self.tabBackgroundImageName;
+
+        tab.tabBarHeight = tabBarHeight;
+
         if ([[vc class] isSubclassOfClass:[UINavigationController class]])
             ((UINavigationController *)vc).delegate = self;
         
@@ -144,26 +135,6 @@ typedef enum {
     
     // Setting the first view controller as the active one
     [tabBar setSelectedTab:[tabBar.tabs objectAtIndex:0]];
-}
-
-- (NSArray *) selectedIconCGColors
-{
-    return _selectedIconColors ? @[(id)[[_selectedIconColors objectAtIndex:0] CGColor], (id)[[_selectedIconColors objectAtIndex:1] CGColor]] : nil;
-}
-
-- (NSArray *) iconCGColors
-{
-    return _iconColors ? @[(id)[[_iconColors objectAtIndex:0] CGColor], (id)[[_iconColors objectAtIndex:1] CGColor]] : nil;
-}
-
-- (NSArray *) tabCGColors
-{
-    return _tabColors ? @[(id)[[_tabColors objectAtIndex:0] CGColor], (id)[[_tabColors objectAtIndex:1] CGColor]] : nil;
-}
-
-- (NSArray *) selectedTabCGColors
-{
-    return _selectedTabColors ? @[(id)[[_selectedTabColors objectAtIndex:0] CGColor], (id)[[_selectedTabColors objectAtIndex:1] CGColor]] : nil;
 }
 
 #pragma - UINavigationControllerDelegate

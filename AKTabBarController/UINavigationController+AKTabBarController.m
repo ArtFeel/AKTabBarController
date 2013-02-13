@@ -24,14 +24,14 @@
 
 @implementation UINavigationController (AKTabBarController)
 
-- (NSString *)tabImageName
+- (NSString *)tabActiveImageName
 {
-	return [[self.viewControllers objectAtIndex:0] tabImageName];
+	return [[self.viewControllers objectAtIndex:0] tabActiveImageName];
 }
 
-- (NSString *)tabTitle
+- (NSString *)tabInactiveImageName
 {
-	return [[self.viewControllers objectAtIndex:0] tabTitle];
+	return [[self.viewControllers objectAtIndex:0] tabInactiveImageName];
 }
 
 @end

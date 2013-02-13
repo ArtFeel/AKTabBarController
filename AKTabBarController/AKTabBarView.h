@@ -24,6 +24,7 @@
 
 @interface AKTabBarView : UIView
 
+@property (nonatomic, assign) NSUInteger shaddowOffset;
 @property (nonatomic, strong) AKTabBar *tabBar;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, assign) BOOL isTabBarHidding;

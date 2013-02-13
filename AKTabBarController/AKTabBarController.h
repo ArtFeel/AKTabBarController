@@ -32,41 +32,23 @@
 // This is the minimum height to display the title.
 @property (nonatomic, assign) CGFloat minimumHeightToDisplayTitle;
 
-// Used to show / hide the tabs title.
-@property (nonatomic, assign) BOOL tabTitleIsHidden;
-
-// Tabs icon colors.
-@property (nonatomic, strong) NSArray *iconColors;
-
-// Tabs selected icon colors.
-@property (nonatomic, strong) NSArray *selectedIconColors;
-
-// Tabs selected colors.
-@property (nonatomic, strong) NSArray *tabColors;
-
-// Tabs selected colors.
-@property (nonatomic, strong) NSArray *selectedTabColors;
-
-// Tabs icon glossy show / hide
-@property (nonatomic, assign) BOOL iconGlossyIsHidden;
-
-// Tab stroke Color
-@property (nonatomic, strong) UIColor *tabStrokeColor;
-
-// Tab top embos Color
-@property (nonatomic, strong) UIColor *tabEdgeColor;
+// Tab bar background image
+@property (nonatomic, strong) NSString *tabBarBackgroundImageName;
 
 // Tab background image
-@property (nonatomic, strong) NSString *backgroundImageName;
+@property (nonatomic, strong) NSString *tabBackgroundImageName;
 
 // Tab selected background image
-@property (nonatomic, strong) NSString *selectedBackgroundImageName;
+@property (nonatomic, strong) NSString *tabSelectedBackgroundImageName;
 
 // Tab text color
-@property (nonatomic, strong)  UIColor *textColor;
+@property (nonatomic, strong) UIColor *textColor;
 
 // Tab selected text color
-@property (nonatomic, strong)  UIColor *selectedTextColor;
+@property (nonatomic, strong) UIColor *selectedTextColor;
+
+// Tab shaddow offset
+@property (nonatomic, assign) NSUInteger shaddowOffset;
 
 // Initialization with a specific height.
 - (id)initWithTabBarHeight:(NSUInteger)height;

@@ -25,7 +25,7 @@
 
 - (NSString *)tabImageName
 {
-	return @"image-2";
+	return @"footer_stream_icon_inactive";
 }
 
 @end

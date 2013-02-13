@@ -24,12 +24,12 @@
 
 @implementation UIViewController (AKTabBarController)
 
-- (NSString *)tabImageName
+- (NSString *)tabActiveImageName
 {
 	return nil;
 }
 
-- (NSString *)tabTitle
+- (NSString *)tabInactiveImageName
 {
 	return nil;
 }
