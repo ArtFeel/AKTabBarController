@@ -25,12 +25,14 @@
 @interface AKTab : UIButton
 
 @property (nonatomic, strong) NSString *activeIconName;
-@property (nonatomic, strong) NSString *inActiveIconName;
+@property (nonatomic, strong) NSString *inactiveIconName;
 
 @property (nonatomic, strong) NSString *activeBackgroundImageName;
-@property (nonatomic, strong) NSString *inActiveBackgroundImageName;
+@property (nonatomic, strong) NSString *inactiveBackgroundImageName;
 
 @property (nonatomic, assign) NSUInteger shaddowOffset;
 @property (nonatomic, assign) NSUInteger tabBarHeight;
+
+@property (nonatomic, assign) NSUInteger badgeValue;
 
 @end

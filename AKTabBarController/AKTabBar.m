@@ -66,6 +66,7 @@ static int kInterTabMargin = 1;
     if (selectedTab != _selectedTab) {
         [_selectedTab setSelected:NO];
         _selectedTab = selectedTab;
+        [self tabSelected:selectedTab];
         [_selectedTab setSelected:YES];
     }
 }
@@ -82,10 +83,7 @@ static int kInterTabMargin = 1;
 
 - (void)drawRect:(CGRect)rect
 {
- 
-    NSLog(@"Crtam tabbar u rectu %@", NSStringFromCGRect(rect));
-    
-    [[UIImage imageNamed:self.backgroundImageName] drawInRect:rect];
+    [[UIImage imageNamed:self.backgroundImageName] drawInRect:self.bounds];
 }
 
 - (void)layoutSubviews {

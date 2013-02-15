@@ -50,7 +50,18 @@
 // Tab shaddow offset
 @property (nonatomic, assign) NSUInteger shaddowOffset;
 
+@property (nonatomic, assign) NSUInteger selectedIndex;
+
+// Current active view controller
+@property (nonatomic, strong) UIViewController *selectedViewController;
+
+@property (nonatomic, assign) CGFloat tabBarHeight;
+
 // Initialization with a specific height.
 - (id)initWithTabBarHeight:(NSUInteger)height;
+
+- (CGRect)contentViewFrame;
+
+- (void)setBadgeValue:(NSInteger)badgeValue onTab:(NSInteger)tabIndex;
 
 @end

@@ -10,5 +10,6 @@ Pod::Spec.new do |s|
   s.source_files = 'AKTabBarController'
   s.resources = "AKTabBarController/AKTabBarController.bundle"
   s.requires_arc = true
+  s.dependency 'LKbadgeView', '~> 1.0.0'
   s.framework = 'QuartzCore'
 end

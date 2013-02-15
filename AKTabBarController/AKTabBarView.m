@@ -42,9 +42,10 @@
 {
     if (_contentView != contentView)
     {
+        //it should be this way because of strange behaviour on ios4.3
+        contentView.frame = _contentView.frame;
         [_contentView removeFromSuperview];
         _contentView = contentView;
-        _contentView.frame = CGRectZero;
         [self addSubview:_contentView];
         [self sendSubviewToBack:_contentView];
     }
@@ -56,10 +57,10 @@
 {
     [super layoutSubviews];
     CGRect tabBarRect = _tabBar.frame;
-    tabBarRect.origin.y = CGRectGetHeight(self.bounds) - CGRectGetHeight(_tabBar.bounds);
+    tabBarRect.origin.y = CGRectGetHeight(self.bounds) - CGRectGetHeight(_tabBar.bounds) ;
     [_tabBar setFrame:tabBarRect];
 
-    CGRect contentViewRect = CGRectMake(0, (!_isTabBarHidding)? self.shaddowOffset:0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - ((!_isTabBarHidding) ? CGRectGetHeight(_tabBar.bounds) - self.shaddowOffset : 0));
+    CGRect contentViewRect = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - ((!_isTabBarHidding) ? CGRectGetHeight(_tabBar.bounds) - self.shaddowOffset : 0));
     _contentView.frame = contentViewRect;
     [_contentView setNeedsLayout];
 }

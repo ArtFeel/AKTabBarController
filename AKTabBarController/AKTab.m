@@ -21,23 +21,28 @@
 // THE SOFTWARE.
 
 #import "AKTab.h"
+#import "LKBadgeView.h"
+
+#define kBadgeMargin 3
 
 // cross fade animation duration.
 static const float kAnimationDuration = 0.15;
 
 // Padding of the content
-static const float kPadding = 4.0;
+static const float kPadding = 0.0;
 
 // Margin between the image and the title
-static const float kMargin = 2.0;
+static const float kMargin = 0.0;
 
 // Margin at the top
-static const float kTopMargin = 2.0;
+static const float kTopMargin = 0.0;
 
 @interface AKTab ()
 
 // Permits the cross fade animation between the two images, duration in seconds.
 - (void)animateContentWithDuration:(CFTimeInterval)duration;
+
+@property (nonatomic, strong) LKBadgeView *badgeView;
 
 @end
 
@@ -51,8 +56,20 @@ static const float kTopMargin = 2.0;
     if (self) {
         self.contentMode = UIViewContentModeScaleAspectFit;
         self.backgroundColor = [UIColor clearColor];
+        [self initBadge];
     }
     return self;
+}
+
+- (void)initBadge {
+    self.badgeView = [[LKBadgeView alloc] initWithFrame:CGRectZero];
+    self.badgeView.widthMode = LKBadgeViewWidthModeSmall;
+    self.badgeView.badgeColor = [UIColor redColor];
+    self.badgeView.textColor = [UIColor whiteColor];
+    self.badgeView.outline = YES;
+    self.badgeView.outlineWidth = 1;
+    self.badgeView.outlineColor = [UIColor whiteColor];
+    [self addSubview:self.badgeView];
 }
 
 #pragma mark - Touche handeling
@@ -73,62 +90,39 @@ static const float kTopMargin = 2.0;
     [self setNeedsDisplay];
 }
 
+#pragma mark - Badge value 
+
+- (void)setBadgeValue:(NSUInteger)badgeValue {
+    _badgeValue = badgeValue;
+    [self setNeedsDisplay];
+}
+
 #pragma mark - Drawing
 
 - (void)drawRect:(CGRect)rect
 {
-
-    NSLog(@"Crtam tab u rectu %@", NSStringFromCGRect(rect));
     
     rect.origin.y = rect.origin.y + self.shaddowOffset;
     rect.size.height = rect.size.height - self.shaddowOffset;
     
-    // Container, basically centered in rect
-    CGRect container = CGRectInset(rect, kPadding, kPadding);
-    container.size.height -= kTopMargin;
-    container.origin.y += kTopMargin;
-    
-    UIImage *image = [UIImage imageNamed:(self.selected)? self.activeIconName:self.inActiveIconName];
+    UIImage *image = [UIImage imageNamed:(self.selected)? self.activeIconName:self.inactiveIconName];
     CGRect imageRect = CGRectZero;
-    CGFloat ratio = 0;
     
-    // Getting the ratio for eventual scaling
-    ratio = image.size.width / image.size.height;
-    
-    // Setting the imageContainer's size.
+    imageRect.origin.x = floorf(CGRectGetMidX(rect) - image.size.width / 2);
+    imageRect.origin.y = floorf(CGRectGetMidY(rect) - image.size.height / 2) + self.shaddowOffset;
     imageRect.size = image.size;
-    
-    // Container of the image + label (when there is room)
-    CGRect content = CGRectZero;
-    content.size.width = CGRectGetWidth(container);
-    
-    // We determine the height based on the longest side of the image (when not square) , presence of the label and height of the container
-    content.size.height = MIN(MAX(CGRectGetWidth(imageRect), CGRectGetHeight(imageRect)), CGRectGetHeight(container));
-    
-    // Now we move the boxes
-    content.origin.x = floorf(CGRectGetMidX(container) - CGRectGetWidth(content) / 2);
-    content.origin.y = floorf(CGRectGetMidY(container) - CGRectGetHeight(content) / 2);
-    
-    CGRect imageContainer = content;
-    imageContainer.size.height = CGRectGetHeight(content);
-    
-    // When the image is not square we have to make sure it will not go beyond the bonds of the container
-    if (CGRectGetWidth(imageRect) >= CGRectGetHeight(imageRect)) {
-        imageRect.size.width = MIN(CGRectGetHeight(imageRect), MIN(CGRectGetWidth(imageContainer), CGRectGetHeight(imageContainer)));
-        imageRect.size.height = floorf(CGRectGetWidth(imageRect) / ratio);
-    } else {
-        imageRect.size.height = MIN(CGRectGetHeight(imageRect), MIN(CGRectGetWidth(imageContainer), CGRectGetHeight(imageContainer)));
-        imageRect.size.width = floorf(CGRectGetHeight(imageRect) * ratio);
-    }
-    
-    imageRect.origin.x = floorf(CGRectGetMidX(content) - CGRectGetWidth(imageRect) / 2);
-    imageRect.origin.y = floorf(CGRectGetMidY(imageContainer) - CGRectGetHeight(imageRect) / 2) + self.shaddowOffset;
-    imageRect.size.height = imageRect.size.height - self.shaddowOffset;
-    
+
     //draw images
-    [[UIImage imageNamed:(self.selected)? self.activeBackgroundImageName:self.inActiveBackgroundImageName] drawInRect:rect];
+    [[UIImage imageNamed:(self.selected)? self.activeBackgroundImageName:self.inactiveBackgroundImageName] drawInRect:rect];
     [image drawInRect:imageRect];
-    
-    
+
+    if (self.badgeValue == 0) {
+        self.badgeView.alpha = 0;
+    } else {
+        self.badgeView.alpha = 1;
+        self.badgeView.frame = CGRectMake(0, 0, self.bounds.size.width/2, self.bounds.size.height/2);
+        self.badgeView.center = CGPointMake(CGRectGetMaxX(self.bounds) - self.bounds.size.width/4, kBadgeMargin + self.bounds.size.height/4);
+        self.badgeView.text = @(3).stringValue;
+    }
 }
 @end

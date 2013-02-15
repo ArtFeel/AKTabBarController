@@ -25,7 +25,7 @@
 
 
 // Default height of the tab bar
-static const int kDefaultTabBarHeight = 50;
+static const int kDefaultTabBarHeight = 52;
 
 // Default Push animation duration
 static const float kPushAnimationDuration = 0.35;
@@ -41,9 +41,6 @@ typedef enum {
     AKShowHideFromRight
 } AKShowHideFrom;
 
-// Current active view controller
-@property (nonatomic, strong) UIViewController *selectedViewController;
-
 - (void)loadTabs;
 - (void)showTabBar:(AKShowHideFrom)showHideFrom animated:(BOOL)animated;
 - (void)hideTabBar:(AKShowHideFrom)showHideFrom animated:(BOOL)animated;
@@ -57,9 +54,11 @@ typedef enum {
     
     // Content view
     AKTabBarView *tabBarView;
-    
-    // Tab Bar height
-    NSUInteger tabBarHeight;
+
+}
+
+- (CGRect)contentViewFrame {
+    return tabBarView.contentView.frame;
 }
 
 #pragma mark - Initialization
@@ -70,7 +69,7 @@ typedef enum {
     if (!self) return nil;
     
     // Setting the default tab bar height
-    tabBarHeight = kDefaultTabBarHeight;
+    self.tabBarHeight = kDefaultTabBarHeight;
     
     return self;
 }
@@ -80,7 +79,7 @@ typedef enum {
     self = [super init];
     if (!self) return nil;
     
-    tabBarHeight = height;
+    self.tabBarHeight = height;
     
     return self;
 }
@@ -93,7 +92,7 @@ typedef enum {
     self.view = tabBarView;
     
     // Creating and adding the tab bar
-    CGRect tabBarRect = CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - tabBarHeight, CGRectGetWidth(self.view.frame), tabBarHeight);
+    CGRect tabBarRect = CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - self.tabBarHeight, CGRectGetWidth(self.view.frame), self.tabBarHeight);
     tabBar = [[AKTabBar alloc] initWithFrame:tabBarRect];
     tabBar.delegate = self;
     tabBar.shaddowOffset = self.shaddowOffset;
@@ -118,12 +117,12 @@ typedef enum {
         tab.shaddowOffset = self.shaddowOffset;
 
         tab.activeIconName = [vc tabActiveImageName];
-        tab.inActiveIconName = [vc tabInactiveImageName];
+        tab.inactiveIconName = [vc tabInactiveImageName];
         
         tab.activeBackgroundImageName = self.tabSelectedBackgroundImageName;
-        tab.inActiveBackgroundImageName = self.tabBackgroundImageName;
+        tab.inactiveBackgroundImageName = self.tabBackgroundImageName;
 
-        tab.tabBarHeight = tabBarHeight;
+        tab.tabBarHeight = self.tabBarHeight;
 
         if ([[vc class] isSubclassOfClass:[UINavigationController class]])
             ((UINavigationController *)vc).delegate = self;
@@ -135,6 +134,19 @@ typedef enum {
     
     // Setting the first view controller as the active one
     [tabBar setSelectedTab:[tabBar.tabs objectAtIndex:0]];
+}
+
+- (void)setSelectedIndex:(NSUInteger)selectedIndex {
+    [tabBar setSelectedTab:[tabBar.tabs objectAtIndex:selectedIndex]];
+    _selectedIndex = selectedIndex;
+}
+
+#pragma mark - Badge setup
+
+- (void)setBadgeValue:(NSInteger)badgeValue onTab:(NSInteger)tabIndex {
+    if (tabIndex >= 0 && tabIndex < tabBar.tabs.count) {
+        [(AKTab *)[tabBar.tabs objectAtIndex:tabIndex] setBadgeValue:badgeValue];
+    }
 }
 
 #pragma - UINavigationControllerDelegate
@@ -172,6 +184,12 @@ typedef enum {
     
     else if (isPreviousHidden && isNextHidden)
         return;
+    
+
+    if ([viewController respondsToSelector:@selector(updateLayout:)]) {
+        [viewController performSelector:@selector(updateLayout:) withObject:@(tabBarView.bounds.size.height - viewController.navigationController.navigationBar.frame.size.height)];
+    }
+
 }
 
 - (void)showTabBar:(AKShowHideFrom)showHideFrom animated:(BOOL)animated
