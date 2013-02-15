@@ -57,6 +57,7 @@ static const float kTopMargin = 0.0;
         self.contentMode = UIViewContentModeScaleAspectFit;
         self.backgroundColor = [UIColor clearColor];
         [self initBadge];
+        self.clipsToBounds = NO;
     }
     return self;
 }
@@ -112,8 +113,23 @@ static const float kTopMargin = 0.0;
     imageRect.origin.y = floorf(CGRectGetMidY(rect) - image.size.height / 2) + self.shaddowOffset;
     imageRect.size = image.size;
 
+    //active tile has inner gradient (it should be like this)
+    CGRect activeRect = rect;
+    activeRect.size.width = activeRect.size.width + 8;
+    activeRect.origin.x = activeRect.origin.x - 4;
+    
+    //design issues small hacks
+    if (self.frame.origin.x == 0) {
+        rect.origin.x -= 1;
+        rect.size.width += 1;
+    }
+    if (self.frame.origin.x >= 4*rect.size.width) {
+        NSLog(@"Tu sam %@", NSStringFromCGRect(self.frame));
+        rect.size.width += 1;
+    }
+    
     //draw images
-    [[UIImage imageNamed:(self.selected)? self.activeBackgroundImageName:self.inactiveBackgroundImageName] drawInRect:rect];
+    [[UIImage imageNamed:(self.selected)? self.activeBackgroundImageName:self.inactiveBackgroundImageName] drawInRect:(self.selected)? activeRect:rect];
     [image drawInRect:imageRect];
 
     if (self.badgeValue == 0) {
