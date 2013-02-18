@@ -124,7 +124,6 @@ static const float kTopMargin = 0.0;
         rect.size.width += 1;
     }
     if (self.frame.origin.x >= 4*rect.size.width) {
-        NSLog(@"Tu sam %@", NSStringFromCGRect(self.frame));
         rect.size.width += 1;
     }
     
@@ -138,7 +137,7 @@ static const float kTopMargin = 0.0;
         self.badgeView.alpha = 1;
         self.badgeView.frame = CGRectMake(0, 0, self.bounds.size.width/2, self.bounds.size.height/2);
         self.badgeView.center = CGPointMake(CGRectGetMaxX(self.bounds) - self.bounds.size.width/4, kBadgeMargin + self.bounds.size.height/4);
-        self.badgeView.text = @(3).stringValue;
+        self.badgeView.text = @(self.badgeValue).stringValue;
     }
 }
 @end
