@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'AKTabBarController'
-  s.version  = '1.1.2'
+  s.version  = '1.1.3'
   s.license  = 'MIT'
   s.summary  = 'AKTabBarController is an adaptive and customizable tab bar for iOS.'
   s.homepage = 'https://github.com/soundcloud/AKTabBarController'
