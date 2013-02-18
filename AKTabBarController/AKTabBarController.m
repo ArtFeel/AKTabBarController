@@ -133,7 +133,7 @@ typedef enum {
     [tabBar setTabs:tabs];
     
     // Setting the first view controller as the active one
-    [tabBar setSelectedTab:[tabBar.tabs objectAtIndex:0]];
+    [tabBar setSelectedTab:[tabBar.tabs objectAtIndex:self.selectedIndex]];
 }
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex {
