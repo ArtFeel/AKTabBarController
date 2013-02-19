@@ -173,18 +173,11 @@ typedef enum {
     
     prevViewControllers = [navigationController viewControllers];
     
-    if (!isPreviousHidden && !isNextHidden)
-        return;
-    
-    else if (!isPreviousHidden && isNextHidden)
+    if (!isPreviousHidden && isNextHidden)
         [self hideTabBar:(pushed ? AKShowHideFromRight : AKShowHideFromLeft) animated:animated];
     
     else if (isPreviousHidden && !isNextHidden)
         [self showTabBar:(pushed ? AKShowHideFromRight : AKShowHideFromLeft) animated:animated];
-    
-    else if (isPreviousHidden && isNextHidden)
-        return;
-    
 
     if ([viewController respondsToSelector:@selector(updateLayout:)]) {
         [viewController performSelector:@selector(updateLayout:) withObject:@(tabBarView.bounds.size.height - viewController.navigationController.navigationBar.frame.size.height)];
