@@ -34,4 +34,9 @@
 	return nil;
 }
 
+- (NSString *)tabBadgeImageName
+{
+    return nil;
+}
+
 @end

@@ -21,7 +21,6 @@
 // THE SOFTWARE.
 
 #import "AKTab.h"
-#import "LKBadgeView.h"
 
 #define kBadgeMargin 3
 
@@ -42,7 +41,6 @@ static const float kTopMargin = 0.0;
 // Permits the cross fade animation between the two images, duration in seconds.
 - (void)animateContentWithDuration:(CFTimeInterval)duration;
 
-@property (nonatomic, strong) LKBadgeView *badgeView;
 
 @end
 
@@ -56,21 +54,9 @@ static const float kTopMargin = 0.0;
     if (self) {
         self.contentMode = UIViewContentModeScaleAspectFit;
         self.backgroundColor = [UIColor clearColor];
-        [self initBadge];
         self.clipsToBounds = NO;
     }
     return self;
-}
-
-- (void)initBadge {
-    self.badgeView = [[LKBadgeView alloc] initWithFrame:CGRectZero];
-    self.badgeView.widthMode = LKBadgeViewWidthModeSmall;
-    self.badgeView.badgeColor = [UIColor redColor];
-    self.badgeView.textColor = [UIColor whiteColor];
-    self.badgeView.outline = YES;
-    self.badgeView.outlineWidth = 1;
-    self.badgeView.outlineColor = [UIColor whiteColor];
-    [self addSubview:self.badgeView];
 }
 
 #pragma mark - Touche handeling
@@ -106,7 +92,7 @@ static const float kTopMargin = 0.0;
     rect.origin.y = rect.origin.y + self.shaddowOffset;
     rect.size.height = rect.size.height - self.shaddowOffset;
     
-    UIImage *image = [UIImage imageNamed:(self.selected)? self.activeIconName:self.inactiveIconName];
+    UIImage *image = [UIImage imageNamed:(self.selected)? self.activeIconName:(self.badgeValue == 0)? self.inactiveIconName:self.badgeIconName];
     CGRect imageRect = CGRectZero;
     
     imageRect.origin.x = floorf(CGRectGetMidX(rect) - image.size.width / 2);
@@ -131,13 +117,5 @@ static const float kTopMargin = 0.0;
     [[UIImage imageNamed:(self.selected)? self.activeBackgroundImageName:self.inactiveBackgroundImageName] drawInRect:(self.selected)? activeRect:rect];
     [image drawInRect:imageRect];
 
-    if (self.badgeValue == 0) {
-        self.badgeView.alpha = 0;
-    } else {
-        self.badgeView.alpha = 1;
-        self.badgeView.frame = CGRectMake(0, 0, self.bounds.size.width/2, self.bounds.size.height/2);
-        self.badgeView.center = CGPointMake(CGRectGetMaxX(self.bounds) - self.bounds.size.width/4, kBadgeMargin + self.bounds.size.height/4);
-        self.badgeView.text = @(self.badgeValue).stringValue;
-    }
 }
 @end

@@ -34,4 +34,7 @@
 	return [[self.viewControllers objectAtIndex:0] tabInactiveImageName];
 }
 
+- (NSString *)tabBadgeImageName {
+    return [[self.viewControllers objectAtIndex:0] tabBadgeImageName];
+}
 @end

@@ -26,6 +26,7 @@
 
 @property (nonatomic, strong) NSString *activeIconName;
 @property (nonatomic, strong) NSString *inactiveIconName;
+@property (nonatomic, strong) NSString *badgeIconName;
 
 @property (nonatomic, strong) NSString *activeBackgroundImageName;
 @property (nonatomic, strong) NSString *inactiveBackgroundImageName;

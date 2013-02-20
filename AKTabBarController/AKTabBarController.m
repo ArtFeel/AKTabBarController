@@ -118,6 +118,7 @@ typedef enum {
 
         tab.activeIconName = [vc tabActiveImageName];
         tab.inactiveIconName = [vc tabInactiveImageName];
+        tab.badgeIconName = [vc tabBadgeImageName];
         
         tab.activeBackgroundImageName = self.tabSelectedBackgroundImageName;
         tab.inactiveBackgroundImageName = self.tabBackgroundImageName;

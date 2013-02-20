@@ -49,7 +49,9 @@
     [self setTabSelectedBackgroundImageName:@"tile_active_big"];
     [self setTabBarBackgroundImageName:@"separator"];
     
+    
     [super viewDidLoad];
+    [self setBadgeValue:3 onTab:0];
 }
 
 - (void)didReceiveMemoryWarning

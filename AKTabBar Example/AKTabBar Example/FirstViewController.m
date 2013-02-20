@@ -50,6 +50,10 @@
 	return @"footer_stream_icon_inactive";
 }
 
+- (NSString *)tabBadgeImageName {
+    return @"image-3";
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;

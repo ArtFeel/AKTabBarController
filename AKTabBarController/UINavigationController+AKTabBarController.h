@@ -24,5 +24,6 @@
 
 - (NSString *)tabActiveImageName;
 - (NSString *)tabInactiveImageName;
+- (NSString *)tabBadgeImageName;
 
 @end
