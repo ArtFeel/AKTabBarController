@@ -56,7 +56,7 @@ static int kInterTabMargin = 1;
         
         for (AKTab *tab in _tabs) {
             tab.userInteractionEnabled = YES;
-            [tab addTarget:self action:@selector(tabSelected:) forControlEvents:UIControlEventTouchUpInside];
+            [tab addTarget:self action:@selector(tabSelected:) forControlEvents:UIControlEventTouchDown];
         }
     }
     [self setNeedsLayout];

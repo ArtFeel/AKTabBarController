@@ -61,9 +61,9 @@ static const float kTopMargin = 0.0;
 
 #pragma mark - Touche handeling
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [super touchesEnded:touches withEvent:event];
+    [super touchesBegan:touches withEvent:event];
     [self animateContentWithDuration:kAnimationDuration];
 }
 
