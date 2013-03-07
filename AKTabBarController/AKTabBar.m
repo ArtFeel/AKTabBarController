@@ -32,7 +32,7 @@ static int kInterTabMargin = 1;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+
         self.userInteractionEnabled = YES;
         self.contentMode = UIViewContentModeRedraw;
         self.opaque = YES;
@@ -51,12 +51,12 @@ static int kInterTabMargin = 1;
         for (AKTab *tab in _tabs) {
             [tab removeFromSuperview];
         }
-        
+
         _tabs = array;
-        
+
         for (AKTab *tab in _tabs) {
             tab.userInteractionEnabled = YES;
-            [tab addTarget:self action:@selector(tabSelected:) forControlEvents:UIControlEventTouchDown];
+            [tab addTarget:self action:@selector(tabSelected:) forControlEvents:UIControlEventTouchUpInside];
         }
     }
     [self setNeedsLayout];
@@ -83,46 +83,49 @@ static int kInterTabMargin = 1;
 
 - (void)drawRect:(CGRect)rect
 {
+    CGRect newRect = self.bounds;
+    newRect.size.width += 1;
+    self.bounds = newRect;
     [[UIImage imageNamed:self.backgroundImageName] drawInRect:self.bounds];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    CGFloat screenWidth = self.bounds.size.width;
-    
+    CGFloat screenWidth = self.bounds.size.width - 1;
+
     CGFloat tabNumber = _tabs.count;
-    
+
     // Calculating the tabs width.
     CGFloat tabWidth = floorf(((screenWidth + 1) / tabNumber) - 1);
-    
+
     // Because of the screen size, it is impossible to have tabs with the same
     // width. Therefore we have to increase each tab width by one until we spend
     // of the spaceLeft counter.
     CGFloat spaceLeft = screenWidth - (tabWidth * tabNumber) - (tabNumber - 1);
-    
+
     CGRect rect = self.bounds;
     rect.size.width = tabWidth;
 
     CGFloat dTabWith;
-    
+
     for (AKTab *tab in _tabs) {
-    
+
         // Here is the code that increment the width until we use all the space left
-        
+
         dTabWith = tabWidth;
-        
+
         if (spaceLeft != 0) {
             dTabWith = tabWidth + 1;
             spaceLeft--;
         }
-        
+
         if ([_tabs indexOfObject:tab] == 0) {
             tab.frame = CGRectMake(rect.origin.x, rect.origin.y, dTabWith, rect.size.height);
         } else {
             tab.frame = CGRectMake(rect.origin.x + kInterTabMargin, rect.origin.y, dTabWith, rect.size.height);
         }
-        
+
         [self addSubview:tab];
         rect.origin.x = tab.frame.origin.x + tab.frame.size.width;
     }

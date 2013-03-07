@@ -190,7 +190,6 @@ typedef enum {
 {
     
     CGFloat directionVector;
-    tabBar.frame = CGRectMake(0.0, CGRectGetHeight(self.view.bounds) - self.tabBarHeight, CGRectGetWidth(self.view.frame), self.tabBarHeight);
     
     switch (showHideFrom) {
         case AKShowHideFromLeft:
@@ -240,7 +239,6 @@ typedef enum {
         tabBar.transform = CGAffineTransformMakeTranslation(CGRectGetWidth(self.view.bounds) * directionVector, 0);
     } completion:^(BOOL finished) {
         tabBar.hidden = YES;
-        tabBarView.tabBar.frame = CGRectZero;
         tabBar.transform = CGAffineTransformIdentity;
     }];
 }
