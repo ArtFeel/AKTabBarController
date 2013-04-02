@@ -39,4 +39,8 @@
     return nil;
 }
 
+- (NSString *)tabAccesibilityLabel
+{
+    return nil;
+}
 @end

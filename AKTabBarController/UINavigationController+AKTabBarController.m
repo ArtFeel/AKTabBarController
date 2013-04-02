@@ -37,4 +37,8 @@
 - (NSString *)tabBadgeImageName {
     return [[self.viewControllers objectAtIndex:0] tabBadgeImageName];
 }
+
+- (NSString *)tabAccesibilityLabel {
+    return [[self.viewControllers objectAtIndex:0] tabAccesibilityLabel];
+}
 @end
